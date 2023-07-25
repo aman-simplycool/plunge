@@ -221,6 +221,7 @@ export class ChatSecComponent {
       this.isSearchActivated = false;
       console.log(this.allChats);
     } else {
+      this.isSearchActivated = true;
       const headers = new HttpHeaders().set(
         'Authorization',
         `Bearer ${this.token}`
@@ -230,7 +231,6 @@ export class ChatSecComponent {
         .subscribe((res) => {
           this.allChats = res;
           console.log(this.allChats);
-          this.isSearchActivated = true;
         });
     }
   }
@@ -344,9 +344,9 @@ export class ChatSecComponent {
     var data = {
       userId: this.userId,
       senderId: this.userSelId,
-      status: 'accepted',
+      status: "accepted",
     };
-
+console.log(data);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -501,7 +501,7 @@ export class ChatSecComponent {
         
       }
     }
-   
+   console.log(this.userSelId);
     if (flag==1 && !this.friendStatusChecked) {
       // Wait for a brief moment (you can adjust the time if needed)
       await new Promise((resolve) => setTimeout(resolve, 5000));

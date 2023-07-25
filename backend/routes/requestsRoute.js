@@ -135,7 +135,7 @@ router.put('/updateStatus', async (req, res) => {
     }
 
     // Find the corresponding request document with the other user
-    const otherUserRequest = await Request.findOne({ userId: senderId, "requests.sender": userId });
+    const otherUserRequest = await Request.findOne({ userId: senderId, "requests.sender": senderId });
 
     if (!otherUserRequest) {
       return res.status(400).json({ message: "Corresponding request document not found with the other user" });
