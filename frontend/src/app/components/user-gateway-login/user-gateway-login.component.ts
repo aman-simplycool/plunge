@@ -33,7 +33,19 @@ async logIn(){
     this.router.navigate(['/home'])
     },
     error:(err)=>{
-      this.toast.error("please login again");
+      if(err.message==="please give both the details"){
+        this.toast.error("please give both the details");
+        return;
+      }
+      if(err.message==="Password is invalid"){
+        this.toast.error("password is invalid");
+        return;
+      }
+      if(err.message==="User not registered"){
+        this.toast.error("user is not registerd");
+        return;
+      }
+      else this.toast.error("please login again");
     }
   }
   )

@@ -33,7 +33,7 @@ router.post('/register',async (req,res)=>{
     });
   
     if (user) {
-     return res.status(201).json({
+     return res.status(200).json({
         _id: user._id,
         name: user.name,
         email: user.email,
@@ -53,6 +53,9 @@ router.post('/register',async (req,res)=>{
 //login api
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+  if(!email||!password){
+    return res.status(400).json({message:"please give both the details"});
+  }
   const tempUser = await User.findOne({ email });
   if (tempUser) {
     if (await tempUser.matchPassword(password)) {
@@ -67,11 +70,11 @@ router.post('/login', async (req, res) => {
       });
     } else {
       console.log("Password is invalid");
-     return res.status(400).send("Password is invalid");
+     return res.status(400).json({message:"Password is invalid"});
     }
   } else {
     console.log("User not registered");
-    return res.status(400).send("User not registered");
+    return res.status(400).send({message:"User not registered"});
   }
 });
 

@@ -100,13 +100,13 @@ async sendData(){
       console.error(error);
       if (error.status === 400) {
         
-        if (error.error.message === "User already exists") {
+        if (error.message === "user already exists") {
           
           this.toast.error("User already exists. Please use a different email.");
-        } else if (error.error.message === "Please Enter all the Fields") {
+        } else if (error.message === "Please Enter all the Feilds") {
           
           this.toast.error("Please enter all the required fields.");
-        } else if (error.error.message === "Registration is allowed only for @akgec.ac.in email addresses") {
+        } else if (error.message === "Registration is allowed only for @akgec.ac.in email addresses") {
           
           this.toast.error("Registration is allowed only for @akgec.ac.in email addresses.");
         } else {
