@@ -8,7 +8,7 @@ const MessageRouter=require("./routes/messageRoutes");
 const requestRouter=require("./routes/requestsRoute");
 const { NotFound,errorHandler} = require("./middleware/errorMiddleware")
 const { protect } = require("./middleware/auth")
-
+const path = require('path');
 dotenv.config();
 
 DB();
@@ -24,19 +24,19 @@ app.use("/api/request",protect,requestRouter);
 // app.use(NotFound);
 // app.use(errorHandler);
 const PORT=process.env.PORT;
-const __dirname1 = path.resolve();
+const __dirname = path.resolve();
 
 
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "/frontend/dist/frontend")));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'frontend', 'dist', 'frontend')));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname1, "frontend", "dist" ,"frontend", "index.html"))
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'frontend', 'index.html'))
   );
 } else {
-  app.get("/", (req, res) => {
-    res.send("API is running..");
+  app.get('/', (req, res) => {
+    res.send('API is running..');
   });
 }
 
