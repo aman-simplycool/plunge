@@ -128,70 +128,68 @@ router.put('/updateStatus', async (req, res) => {
   }
 
   try {
-    const request = await Request.findOne({ userId, "requests.sender._id": senderId });
+    const request = await Request.findOne({ userId:userId, "requests.sender": senderId });
 
     if (!request) {
       return res.status(404).json({ error: "Request not found." });
     }
 
     // Find the corresponding request document with the other user
-    const otherUserRequest = await Request.findOne({ userId: senderId, "requests.sender._id": senderId });
+    const otherUserRequest = await Request.findOne({ userId: senderId, "requests.sender": senderId });
 
     if (!otherUserRequest) {
       return res.status(400).json({ message: "Corresponding request document not found with the other user" });
     }
-    console.log(otherUserRequest,request);
-    return res.status(200).json({message:"tested done"});
     // Update the status of the matched request and the corresponding request with the other user
-  //  else{
-  //   const requestIndex = request.requests.findIndex(req => req.sender._id === senderId);
-  //   if (requestIndex !== -1) {
-  //     request.requests[requestIndex].status = status;
-  //     await request.save();
-  //   } else {
-  //     return res.status(404).json({ error: "Sender not found in the request." });
-  //   }
-  //   const otherUserRequestIndex = otherUserRequest.requests.findIndex(req => req.sender._id === senderId);
-  //   if (otherUserRequestIndex !== -1) {
-  //     otherUserRequest.requests[otherUserRequestIndex].status = status;
-  //     await otherUserRequest.save();
-  //   } else {
-  //     return res.status(404).json({ error: "User not found in the request." });
-  //   }
+   else{
+    const requestIndex = request.requests.findIndex(req => req.sender._id === senderId);
+    // if (requestIndex !== -1) {
+    //   request.requests[requestIndex].status = status;
+    //   await request.save();
+    // } else {
+    //   return res.status(404).json({ error: "Sender not found in the request." });
+    // }
+    const otherUserRequestIndex = otherUserRequest.requests.findIndex(req => req.sender._id === senderId);
+    // if (otherUserRequestIndex !== -1) {
+    //   otherUserRequest.requests[otherUserRequestIndex].status = status;
+    //   await otherUserRequest.save();
+    // } else {
+    //   return res.status(404).json({ error: "User not found in the request." });
+    // }
 
-  //   // If the status is "rejected", delete the request documents
-  //   if (status === "rejected") {
-  //     await Request.findOneAndDelete({ userId, "requests.sender": senderId });
-  //     await Request.findOneAndDelete({ userId: senderId, "requests.sender": senderId });
-  //   }
+    // If the status is "rejected", delete the request documents
+    if (status === "rejected") {
+      await Request.findOneAndDelete({ userId, "requests.sender": senderId });
+      await Request.findOneAndDelete({ userId: senderId, "requests.sender": senderId });
+    }
 
-  //   // If the status is "accepted", delete the request documents and add documents in the friends collection for both users
-  //   if (status === "accepted") {
-  //     await Request.findOneAndDelete({ userId, "requests.sender": senderId });
-  //     await Request.findOneAndDelete({ userId: senderId, "requests.sender": senderId });
+    // If the status is "accepted", delete the request documents and add documents in the friends collection for both users
+    if (status === "accepted") {
+      await Request.findOneAndDelete({ userId, "requests.sender": senderId });
+      await Request.findOneAndDelete({ userId: senderId, "requests.sender": senderId });
 
-  //     // Add to user's friend list
-  //     const userFriend = await Friends.findOne({ userId });
-  //     if (userFriend) {
-  //       userFriend.friendIds.push(senderId);
-  //       await userFriend.save();
-  //     } else {
-  //       await Friends.create({ userId, friendIds: [senderId] });
-  //     }
+      // Add to user's friend list
+      const userFriend = await Friends.findOne({ userId });
+      if (userFriend) {
+        userFriend.friendIds.push(senderId);
+        await userFriend.save();
+      } else {
+        await Friends.create({ userId, friendIds: [senderId] });
+      }
 
-  //     // Add to sender's friend list
-  //     const senderFriend = await Friends.findOne({ userId: senderId });
-  //     if (senderFriend) {
-  //       senderFriend.friendIds.push(userId);
-  //       await senderFriend.save();
-  //     } else {
-  //       await Friends.create({ userId: senderId, friendIds: [userId] });
-  //     }
-  //   }
+      // Add to sender's friend list
+      const senderFriend = await Friends.findOne({ userId: senderId });
+      if (senderFriend) {
+        senderFriend.friendIds.push(userId);
+        await senderFriend.save();
+      } else {
+        await Friends.create({ userId: senderId, friendIds: [userId] });
+      }
+    }
 
-  //   console.log("accepted successfully");
-  //   return res.status(200).json({ message: "Request status updated successfully." });
-  // } 
+    console.log("done successfully");
+    return res.status(200).json({ message: "Request status updated successfully." });
+  } 
 }
 catch (error) {
     console.log(error);

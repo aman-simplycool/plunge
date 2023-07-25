@@ -1,6 +1,9 @@
 const express=require("express")
 const dotenv=require("dotenv")
+dotenv.config();
 const DB=require('./config/db')
+DB();
+
 const cors = require('cors');
 const userRoutes=require('./routes/userRoutes')
 const chatRoutes=require('./routes/chatRoutes')
@@ -9,9 +12,9 @@ const requestRouter=require("./routes/requestsRoute");
 const { NotFound,errorHandler} = require("./middleware/errorMiddleware")
 const { protect } = require("./middleware/auth")
 const path = require('path');
-dotenv.config();
 
-DB();
+
+
 
 const app=express();
 app.use(express.json());
@@ -23,7 +26,7 @@ app.use("/api/message",protect,MessageRouter);
 app.use("/api/request",protect,requestRouter);
 // app.use(NotFound);
 // app.use(errorHandler);
-const PORT=process.env.PORT;
+const PORT=process.env.PORT||5000;
 
 
 
