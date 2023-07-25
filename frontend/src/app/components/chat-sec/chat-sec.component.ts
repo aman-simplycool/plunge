@@ -384,7 +384,7 @@ console.log(data);
     var data = {
       userId: this.userId,
       senderId: notification.sender._id,
-      status: 'rejected',
+      status: "rejected",
     };
     const httpOptions = {
       headers: new HttpHeaders({

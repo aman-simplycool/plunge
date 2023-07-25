@@ -143,24 +143,31 @@ router.put('/updateStatus', async (req, res) => {
 
     // Update the status of the matched request and the corresponding request with the other user
    else{
-    const requestIndex = request.requests.findIndex(req => req.sender.toString() === senderId);
-    request.requests[requestIndex].status = status;
-    await request.save();
-
-    const otherUserRequestIndex = otherUserRequest.requests.findIndex(req => req.sender.toString() === userId);
-    otherUserRequest.requests[otherUserRequestIndex].status = status;
-    await otherUserRequest.save();
+    const requestIndex = request.requests.findIndex(req => req.sender._id === senderId);
+    if (requestIndex !== -1) {
+      request.requests[requestIndex].status = status;
+      await request.save();
+    } else {
+      return res.status(404).json({ error: "Sender not found in the request." });
+    }
+    const otherUserRequestIndex = otherUserRequest.requests.findIndex(req => req.sender._id === senderId);
+    if (otherUserRequestIndex !== -1) {
+      otherUserRequest.requests[otherUserRequestIndex].status = status;
+      await otherUserRequest.save();
+    } else {
+      return res.status(404).json({ error: "User not found in the request." });
+    }
 
     // If the status is "rejected", delete the request documents
     if (status === "rejected") {
       await Request.findOneAndDelete({ userId, "requests.sender": senderId });
-      await Request.findOneAndDelete({ userId: senderId, "requests.sender": userId });
+      await Request.findOneAndDelete({ userId: senderId, "requests.sender": senderId });
     }
 
     // If the status is "accepted", delete the request documents and add documents in the friends collection for both users
     if (status === "accepted") {
       await Request.findOneAndDelete({ userId, "requests.sender": senderId });
-      await Request.findOneAndDelete({ userId: senderId, "requests.sender": userId });
+      await Request.findOneAndDelete({ userId: senderId, "requests.sender": senderId });
 
       // Add to user's friend list
       const userFriend = await Friends.findOne({ userId });
