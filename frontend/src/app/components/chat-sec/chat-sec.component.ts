@@ -297,7 +297,7 @@ export class ChatSecComponent {
         },
         error: (error) => {
           console.error('Error creating group chat:', error);
-          this.toast.success('some error occured while creating the group');
+          this.toast.error('some error occured while creating the group');
           this.closeModal();
         },
       });

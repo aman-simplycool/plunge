@@ -151,10 +151,10 @@ console.log(userId,senderId);
         await Friends.create({ userId: senderId, friendIds: [userId] });
       }
     }
-
-    res.status(200).json({ message: "Request status updated successfully." });
+    console.log("accepted successfully");
+    return res.status(200).json({ message: "Request status updated successfully." });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error." });
+    return res.status(500).json({ error: "Internal server error." });
   }
 });
 
