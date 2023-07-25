@@ -351,13 +351,13 @@ export class ChatSecComponent {
       senderId: this.userSelId,
       status: 'accepted',
     };
-    const roomId = `${notification.sender._id}-${this.userId}`;
+    // const roomId = `${notification.sender._id}-${this.userId}`;
     this.service
       .changeStatus('updateStatus', httpoptions.headers, data)
       .subscribe({
         next: (res) => {
           this.toast.success('accepted request');
-          this.chatService.reqAccept(roomId, this.userInfo2.name);
+          // this.chatService.reqAccept(roomId, this.userInfo2.name);
           const index = this.requestArr.findIndex(
             (request) => request._id === notification._id
           );
@@ -367,6 +367,7 @@ export class ChatSecComponent {
           }
         },
         error: (err) => {
+          console.log(err);
           this.toast.error('some internal error occured');
         },
       });
@@ -386,13 +387,13 @@ export class ChatSecComponent {
       senderId: this.userSelId,
       status: 'rejected',
     };
-    const roomId = `${notification.sender._id}-${this.userId}`;
+    // const roomId = `${notification.sender._id}-${this.userId}`;
     this.service
       .changeStatus('updateStatus', httpoptions.headers, data)
       .subscribe({
         next: (res) => {
           this.toast.success('rejected request');
-          this.chatService.reqAccept(roomId, this.userInfo2.name);
+          // this.chatService.reqAccept(roomId, this.userInfo2.name);
           const index = this.requestArr.findIndex(
             (request) => request._id === notification._id
           );
@@ -402,6 +403,7 @@ export class ChatSecComponent {
           }
         },
         error: (err) => {
+          console.log(err);
           this.toast.error('some internal error occured');
         },
       });
