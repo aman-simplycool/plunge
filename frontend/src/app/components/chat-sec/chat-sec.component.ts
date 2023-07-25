@@ -440,13 +440,18 @@ export class ChatSecComponent {
     this.service.sendReq('sendReq',httpOptions.headers,data).subscribe(
       {
         next:(res)=>{
-          if(res.message=="request already pending"){
+          if(res.message==="request already pending"){
             this.toast.error("already a request is there");
+            return;
+          }
+          else if(res.message==="this person has already sent you a request"){
+            this.toast.show("this person has already sent you a request");
             return;
           }
           else {
             this.toast.success("request sent succesfully");
             this.closeModal5();
+            return;
           }
         },
         error:(err)=>{

@@ -49,12 +49,39 @@ router.post('/sendReq', async (req, res) => {
       "requests.sender": senderId,
       "requests.status": "pending",
     });
-  
+    //or receiver has sent any request to him
+    const existingRequest1 = await Request.findOne({
+      userId: senderId,
+      "requests.sender": receiverId,
+      "requests.status": "pending",
+    });
     if (existingRequest) {
       // If there is a pending request, return an error
       return res.status(201).json({ message: "request already pending" });
     }
-  
+    if(existingRequest1){
+      return res.status(200).json({message:"this person has already sent you a request"});
+    }
+
+    //checking that user is already present or this is his first request
+    const userIdexists=await Request.findOne({userId:receiverId});
+    if(userIdexists){
+      const body={
+        sender:senderId,
+        status:"pending",
+        timestamp:Date.now(),
+        message:msg
+      }
+      userIdexists.requests.push(body);
+      try {
+        // Save the updated document to the database
+        await userIdexists.save();
+        res.status(200).json({ message: "Friend request sent successfully" });
+      } catch (error) {
+        console.error("Error saving request:", error);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    }
     // If no pending request exists, create a new request
     const newRequest = new Request({
       userId: receiverId,
@@ -173,6 +200,7 @@ console.log(userId,senderId);
       if (!data || !data.requests) {
         return res.status(200).send([]);
       } else {
+        console.log(data.requests);
         return res.status(200).send(data.requests);
       }
     } catch (error) {
