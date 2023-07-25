@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  private userapiUrl="/api/user";
-  private chatapiUrl="/api/chat"
-  private messageUrl="/api/message"
-  private requestapiUrl="/api/request"
+  private userapiUrl="https://plunge-production.up.railway.app/api/user";
+  private chatapiUrl="https://plunge-production.up.railway.app/api/chat"
+  private messageUrl="https://plunge-production.up.railway.app/api/message"
+  private requestapiUrl="https://plunge-production.up.railway.app/api/request"
   constructor(private http: HttpClient) { }
 
   
