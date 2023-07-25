@@ -24,7 +24,7 @@ app.use("/api/request",protect,requestRouter);
 // app.use(NotFound);
 // app.use(errorHandler);
 const PORT=process.env.PORT;
-const __dirname = path.resolve();
+
 
 
 
