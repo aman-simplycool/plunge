@@ -343,7 +343,7 @@ export class ChatSecComponent {
   
     var data = {
       userId: this.userId,
-      senderId: this.userSelId,
+      senderId: notification.sender._id,
       status: "accepted",
     };
 console.log(data);
@@ -383,7 +383,7 @@ console.log(data);
   
     var data = {
       userId: this.userId,
-      senderId: this.userSelId,
+      senderId: notification.sender._id,
       status: 'rejected',
     };
     const httpOptions = {
