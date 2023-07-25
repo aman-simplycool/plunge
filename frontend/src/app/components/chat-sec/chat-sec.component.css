@@ -45,6 +45,11 @@
   padding: 10px;
 }
 
+/* //for chat cards that come aftersearching for any user */
+.chat-item:hover {
+  background-color: #d8cccc; /* Change to your desired background color */
+  cursor: pointer;
+}
 
 .chat-window-container {
   flex: 3;
@@ -724,5 +729,20 @@ input[type="text"] {
   margin-top: 20px;
   color: #999;
 }
+
+
+/* //if not chat has been selected then  */
+.no-chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #555;
+}
+/* ends */
 
  /* ends */ 

@@ -78,6 +78,9 @@
           </div>
         </div>
       </div>
+      <div class="no-chat" *ngIf="!selectedChat">
+        <p>No chat has been selected.</p>
+      </div>      
       <div class="chat-messages">
         <div *ngFor="let message of temparrChat2" class="message-container">
           <div
