@@ -7,7 +7,7 @@ router.post('/register',async (req,res)=>{
     const { name, email, password, pic } = req.body;
   
     if (!name || !email || !password) {
-      res.status(400);
+      
       return res.status(400).json({message:"Please Enter all the Feilds"});
     }
 
@@ -19,12 +19,13 @@ router.post('/register',async (req,res)=>{
     const userExists = await User.findOne({email});
   
     if (userExists) {
-      res.status(400);
+      
       console.log("User already exists");
-      res.status(400).json({message:"user already exists"})
+      return res.status(400).json({message:"user already exists"})
     }
   
-    const user = await User.create({
+    else{
+      const user = await User.create({
       name,
       email,
       password,
@@ -32,7 +33,7 @@ router.post('/register',async (req,res)=>{
     });
   
     if (user) {
-      res.status(201).json({
+     return res.status(201).json({
         _id: user._id,
         name: user.name,
         email: user.email,
@@ -40,12 +41,12 @@ router.post('/register',async (req,res)=>{
         pic: user.pic,
         token: generateToken(user._id),
       });
-      console.log(user);
     } else {
-      res.status(400);
+      
       console.log("User Not found");
      return res.status(400).json({message:"user not found"})
     }
+  }
 })
 
 
@@ -56,7 +57,7 @@ router.post('/login', async (req, res) => {
   if (tempUser) {
     if (await tempUser.matchPassword(password)) {
       console.log("Login Successful");
-      res.json({
+     return  res.json({
         _id: tempUser._id,
         name: tempUser.name,
         email: tempUser.email,
@@ -66,11 +67,11 @@ router.post('/login', async (req, res) => {
       });
     } else {
       console.log("Password is invalid");
-      res.status(400).send("Password is invalid");
+     return res.status(400).send("Password is invalid");
     }
   } else {
     console.log("User not registered");
-    res.status(400).send("User not registered");
+    return res.status(400).send("User not registered");
   }
 });
 
@@ -86,7 +87,7 @@ router.get('/allUsers',protect,async (req,res)=>{
     ],
   }:{}
   const users=await User.find(keyword).find({_id:{ $ne: req.user._id}});
-  res.send(users);
+  return res.status(200).send(users);
 })
 
 //get info about any user
@@ -95,9 +96,9 @@ router.get('/getUser/:userId', async (req, res) => {
 
   try {
     const user = await User.findById(userId);
-    res.status(200).json(user);
+    return res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
