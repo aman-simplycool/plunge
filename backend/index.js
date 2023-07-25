@@ -29,16 +29,19 @@ const PORT=process.env.PORT;
 
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'frontend', 'dist', 'frontend')));
+  // Serve the static files from the frontend build folder
+  app.use(express.static(path.join(__dirname, '../frontend/dist/frontend')));
 
+  // Send the index.html file from the frontend build folder
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'frontend', 'index.html'))
+    res.sendFile(path.resolve(__dirname, '../frontend/dist/frontend', 'index.html'))
   );
 } else {
   app.get('/', (req, res) => {
     res.send('API is running..');
   });
 }
+
 
 
 const server=app.listen(PORT,console.log(`server is running at port ${PORT}`));
