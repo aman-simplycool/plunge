@@ -24,6 +24,7 @@ export class ChatSecComponent {
   ) {
     //any new message received
     this.chatService.newMessageReceived().subscribe((res) => {
+      if(res.sender._id!=this.userId){
       this.temparrChat2.push(res);
       const message=(`${res.sender.name} sent you a message`);
       this.tempMsgArr.push(message);
@@ -34,7 +35,9 @@ export class ChatSecComponent {
           chat.latestMessage = res._id;
         }
       });
+    }
     });
+  
     //listening for someone typing
     this.chatService.isSomeoneTyping().subscribe((res) => {
       this.isSomeoneTyping = true;
