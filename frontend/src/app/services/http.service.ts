@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  private userapiUrl="http://localhost:5000/api/user";
-  private chatapiUrl="http://localhost:5000/api/chat"
-  private messageUrl="http://localhost:5000/api/message"
-  private requestapiUrl="http://localhost:5000/api/request"
+  private userapiUrl="/api/user";
+  private chatapiUrl="/api/chat"
+  private messageUrl="/api/message"
+  private requestapiUrl="/api/request"
   constructor(private http: HttpClient) { }
 
   
