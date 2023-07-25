@@ -76,10 +76,10 @@ router.post('/sendReq', async (req, res) => {
       try {
         // Save the updated document to the database
         await userIdexists.save();
-        res.status(200).json({ message: "Friend request sent successfully" });
+        return res.status(200).json({ message: "Friend request sent successfully" });
       } catch (error) {
         console.error("Error saving request:", error);
-        res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: "Internal server error" });
       }
     }
     // If no pending request exists, create a new request
@@ -106,10 +106,10 @@ router.post('/sendReq', async (req, res) => {
       // Save the new request document to the database
       await newRequest.save();
       await newRequest2.save();
-      res.status(200).json({ message: "Friend request sent successfully" });
+      return res.status(200).json({ message: "Friend request sent successfully" });
     } catch (error) {
       console.error("Error saving request:", error);
-      res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error" });
     }
   });
 
@@ -124,44 +124,46 @@ router.put('/updateStatus', async (req, res) => {
   const { userId, senderId, status } = req.body;
 
   if (!userId || !senderId || !status) {
-    res.status(400).send("insufficient details");
+    return res.status(400).json({ error: "insufficient details" });
   }
-console.log(userId,senderId);
+
   try {
-    const request = await Request.findOne({ userId:userId, "requests.sender": senderId });
+    const request = await Request.findOne({ userId, "requests.sender": senderId });
 
     if (!request) {
       return res.status(404).json({ error: "Request not found." });
     }
 
     // Find the corresponding request document with the other user
-    const otherUserRequest = await Request.findOne({ userId: senderId, "requests.sender": senderId });
+    const otherUserRequest = await Request.findOne({ userId: senderId, "requests.sender": userId });
 
     if (!otherUserRequest) {
       return res.status(400).json({ message: "Corresponding request document not found with the other user" });
     }
 
     // Update the status of the matched request and the corresponding request with the other user
-   
+   else{
+    const requestIndex = request.requests.findIndex(req => req.sender.toString() === senderId);
+    request.requests[requestIndex].status = status;
+    await request.save();
+
+    const otherUserRequestIndex = otherUserRequest.requests.findIndex(req => req.sender.toString() === userId);
+    otherUserRequest.requests[otherUserRequestIndex].status = status;
+    await otherUserRequest.save();
 
     // If the status is "rejected", delete the request documents
     if (status === "rejected") {
-       await request.save();
-       await otherUserRequest.save();
-
       await Request.findOneAndDelete({ userId, "requests.sender": senderId });
       await Request.findOneAndDelete({ userId: senderId, "requests.sender": userId });
     }
 
     // If the status is "accepted", delete the request documents and add documents in the friends collection for both users
     if (status === "accepted") {
-          await request.save();
-       await otherUserRequest.save();
       await Request.findOneAndDelete({ userId, "requests.sender": senderId });
       await Request.findOneAndDelete({ userId: senderId, "requests.sender": userId });
 
       // Add to user's friend list
-      const userFriend = await Friends.findOne({ userId:userId });
+      const userFriend = await Friends.findOne({ userId });
       if (userFriend) {
         userFriend.friendIds.push(senderId);
         await userFriend.save();
@@ -178,9 +180,13 @@ console.log(userId,senderId);
         await Friends.create({ userId: senderId, friendIds: [userId] });
       }
     }
+
     console.log("accepted successfully");
     return res.status(200).json({ message: "Request status updated successfully." });
-  } catch (error) {
+  } 
+}
+catch (error) {
+    console.log(error);
     return res.status(500).json({ error: "Internal server error." });
   }
 });

@@ -340,22 +340,26 @@ export class ChatSecComponent {
   }
 
   async acceptRequest(notification: any) {
-    const httpoptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`,
-      }),
-    };
+  
     var data = {
       userId: this.userId,
       senderId: this.userSelId,
       status: 'accepted',
     };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      }),
+    };
+
     // const roomId = `${notification.sender._id}-${this.userId}`;
     this.service
-      .changeStatus('updateStatus', httpoptions.headers, data)
+      .changeStatus('updateStatus', httpOptions.headers, data)
       .subscribe({
         next: (res) => {
+          console.log(res);
           this.toast.success('accepted request');
           // this.chatService.reqAccept(roomId, this.userInfo2.name);
           const index = this.requestArr.findIndex(
@@ -376,20 +380,21 @@ export class ChatSecComponent {
   //to reject the request
 
   async rejectRequest(notification: any) {
-    const httpoptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`,
-      }),
-    };
+  
     var data = {
       userId: this.userId,
       senderId: this.userSelId,
       status: 'rejected',
     };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      }),
+    };
     // const roomId = `${notification.sender._id}-${this.userId}`;
     this.service
-      .changeStatus('updateStatus', httpoptions.headers, data)
+      .changeStatus('updateStatus', httpOptions.headers, data)
       .subscribe({
         next: (res) => {
           this.toast.success('rejected request');
