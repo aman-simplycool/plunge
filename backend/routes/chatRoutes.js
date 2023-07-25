@@ -47,8 +47,7 @@ router.post('/accessChat',async(req,res)=>{
        
         res.status(200).json(FullChat);
       } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
+        res.status(400).json({message:`${error} occured`});
       }
     }
 })
@@ -73,7 +72,7 @@ router.get('/fetchChats/:userId', async (req, res) => {
     })
     .catch((error) => {
       res.status(400);
-      throw new Error(error.message);
+      return res.status(400).json({message:`${error} occured`});
     });
 });
 
@@ -108,8 +107,7 @@ router.post('/createGroupChat',async (req,res)=>{
     
         res.status(200).json(fullGroupChat);
       } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
+        res.status(400).json({message:`${error} occured`});
       }
 })
 
@@ -130,8 +128,7 @@ router.put('/renameGroup',async (req,res)=>{
       .populate("groupAdmin", "-password");
   
     if (!updatedChat) {
-      res.status(404);
-      throw new Error("Chat Not Found");
+      res.status(404).json({message:"Chat Not Found"});
     } else {
       res.json(updatedChat);
     }

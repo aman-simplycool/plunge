@@ -8,7 +8,7 @@ router.post('/register',async (req,res)=>{
   
     if (!name || !email || !password) {
       res.status(400);
-      throw new Error("Please Enter all the Feilds");
+      return res.status(400).json({message:"Please Enter all the Feilds"});
     }
 
     const emailDomain = email.split("@")[1];
@@ -21,7 +21,7 @@ router.post('/register',async (req,res)=>{
     if (userExists) {
       res.status(400);
       console.log("User already exists");
-      throw new Error("User already exists");
+      res.status(400).json({message:"user already exists"})
     }
   
     const user = await User.create({
@@ -44,7 +44,7 @@ router.post('/register',async (req,res)=>{
     } else {
       res.status(400);
       console.log("User Not found");
-      throw new Error("User not found");
+     return res.status(400).json({message:"user not found"})
     }
 })
 

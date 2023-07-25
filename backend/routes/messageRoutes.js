@@ -33,8 +33,7 @@ router.post('/sendMessage',async(req, res) => {
   
       res.json(message);
     } catch (error) {
-      res.status(400);
-      throw new Error(error.message);
+      res.status(400).json({message:`${error} occured`});
     }
   });
 
@@ -47,8 +46,7 @@ router.post('/sendMessage',async(req, res) => {
         .populate("chat");
       res.json(messages);
     } catch (error) {
-      res.status(400);
-      throw new Error(error.message);
+      res.status(400).json({message:`${error} occured`});
     }
   });
   
