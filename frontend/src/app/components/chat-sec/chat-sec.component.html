@@ -1,0 +1,273 @@
+<div class="main-container">
+  <div class="chat-list-container">
+    <div class="top-bar">
+      <div class="search-bar">
+        <input type="text" placeholder="Search" (input)="filterChats($event)" />
+      </div>
+      <button class="add-group-btn" (click)="openModal()">+</button>
+    </div>
+    <ul class="chat-items">
+      <li
+        class="chat-item"
+        *ngFor="let chatGroup of allChats; let ind = index"
+        (click)="selectChat(chatGroup)"
+      >
+        <div class="profile-pic"></div>
+        <div class="chat-info" *ngIf="isSearchActivated == false">
+          <h3 class="chat-title">
+            {{
+              chatGroup.isGroupChat
+                ? chatGroup.chatName
+                : getSender(chatGroup.users)
+            }}
+          </h3>
+          <p
+            class="chat-message latest-message"
+            *ngIf="chatGroup.latestMessage"
+          >
+            {{ chatGroup.latestMessage.content }}
+          </p>
+        </div>
+        <div class="chat-info" *ngIf="isSearchActivated == true">
+          <h3 class="chat-title">{{ chatGroup.name }}</h3>
+          <p class="chat-message">{{ chatGroup.email }}</p>
+          <p
+            class="chat-message latest-message"
+            *ngIf="chatGroup.latestMessage"
+          >
+            {{ chatGroup.latestMessage.content }}
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="chat-window-container">
+    <div class="chat-window">
+      <div class="chat-header">
+        <div class="navbar">
+          <h2 class="chat-title" *ngIf="selectedChat.length == 0">Chats</h2>
+          <h2 class="chat-title" *ngIf="selectedChat.length > 0">
+            {{ selectedChat }}
+          </h2>
+          <div *ngIf="isSomeoneTyping">
+            <p style="color:white">..typing</p>
+          </div>
+          <div class="nav-buttons">
+            <button class="notifications-button" (click)="openModal6()">
+              🔔
+            </button>
+        <div *ngIf="isVerified">
+            <button
+              class="members-button"
+              *ngIf="isgroupChat"
+              (click)="openModal4()"
+            >
+              &#8230;
+            </button>
+            <button
+              class="info-button"
+              *ngIf="isgroupChat && isUserAdmin"
+              (click)="openModal2()"
+            >
+              edit
+            </button>
+          </div> 
+            <button class="profile-button" (click)="openModal3()">
+              {{ userInfo2.name.charAt(0) }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="chat-messages">
+        <div *ngFor="let message of temparrChat2" class="message-container">
+          <div
+            [ngClass]="{
+              'message-right': message.sender._id === userId,
+              'message-left': message.sender._id !== userId
+            }"
+            class="message-card"
+          >
+            <p class="message-content">{{ message.content }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="message-input" *ngIf="isVerified">
+        <input
+          type="text"
+          (input)="typing()"
+          placeholder="Type a message"
+          [(ngModel)]="message"
+        />
+        <button class="send-button" (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <h2 class="modal-title">Create Group</h2>
+    <div class="modal-body">
+      <label for="groupName">Chat Name:</label>
+      <input type="text" id="groupName" [(ngModel)]="chatName" />
+      <label for="members">Members:</label>
+      <input type="text" id="members" (input)="searchUser2($event)" />
+    </div>
+    <div class="selected-users">
+      <div *ngFor="let user of tempGrpUser" class="user-card">
+        <span>{{ user.name }}</span>
+        <button class="deselect-button" (click)="deselectUser(user)">X</button>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="modal-btn" (click)="createGroup()">Create</button>
+      <button class="modal-btn" (click)="closeModal()">Cancel</button>
+      <!-- //matched userslist  -->
+      <div class="user-cards">
+        <div
+          class="user-card"
+          *ngFor="let user of users2"
+          (click)="isUserSelected(user); addMember(user)"
+        >
+          <div class="user-name">{{ user.name }}</div>
+          <div class="user-email">{{ user.email }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal2 to update group chat-->
+<div class="modal2" *ngIf="isModal2Open">
+  <div class="modal2-content">
+    <div class="modal2-header">
+      <h2 class="modal2-title">Update Group</h2>
+      <button class="modal2-close-button" (click)="closeModal2()">X</button>
+    </div>
+    <div class="modal2-body">
+      <label for="groupName">Group Name:</label>
+      <input type="text" id="groupName" [(ngModel)]="updatedGroupName" />
+      <label for="members">Members:</label>
+      <input type="text" id="members" (input)="searchUser2($event)" />
+    </div>
+    <div class="selected-users">
+      <div *ngFor="let user of tempGrpUser2" class="user-card">
+        <span>{{ user.name }}</span>
+        <button class="deselect-button" (click)="deselectUser2(user)">X</button>
+      </div>
+    </div>
+
+    <div class="modal2-footer">
+      <button class="modal2-update-button" (click)="updateGroup()">
+        Update
+      </button>
+      <button class="modal2-cancel-button" (click)="closeModal2()">
+        Cancel
+      </button>
+      <div class="user-cards">
+        <div
+          class="user-card"
+          *ngFor="let user of users2"
+          (click)="addMember2(user)"
+        >
+          <h4 class="user-name">{{ user.name }}</h4>
+          <p class="user-email">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 3-->
+
+<div *ngIf="showModal3" class="modal3">
+  <div class="modal-content">
+    <div class="profile-picture-modal3">
+    </div>
+    <h2 class="profile-title">{{ userInfo2.name }}</h2>
+    <p class="profile-email">{{ userInfo2.email }}</p>
+    <button class="logout-button" (click)="logOut()">Logout</button>
+    <button class="modal3-cancel-button" (click)="closeModal3()">Cancel</button>
+  </div>
+</div>
+
+<!-- modal 4 -->
+<div class="modal4" *ngIf="isModal4Open">
+  <div class="modal4-content">
+    <h2 class="modal4-title">Group Members</h2>
+    <div class="modal4-body">
+      <ul class="member-list">
+        <li class="member-item" *ngFor="let member of allUsersOfgrp">
+          {{ member.name }}
+          <span *ngIf="member._id === grpAdminId" class="admin-text"
+            >Group Admin</span
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="modal4-footer">
+      <button class="modal4-btn" (click)="closeModal4()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- //modal 4 ends -->
+
+<!-- Modal 5 -->
+<div class="modal5" *ngIf="isModal5Open">
+  <div class="modal5-content">
+    <h2 class="modal5-title">Send Friend Request</h2>
+    <div class="modal5-body">
+      <h3 class="pre-made-messages-title">why??:</h3>
+      <ul class="pre-made-messages-list">
+        <li class="pre-made-message" *ngFor="let message of preMadeMessages">
+          <input
+            type="radio"
+            name="selectedMessage"
+            (click)="selectMessage(message)"
+          />
+          {{ message }}
+        </li>
+      </ul>
+    </div>
+    <div class="modal5-footer">
+      <button class="send-request-button" (click)="sendReq()">Send Friend Request</button>
+      <button class="modal5-close-button" (click)="closeModal5()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- 
+modal 6 -->
+<div class="modal6" *ngIf="isModal6Open">
+  <div class="modal6-content">
+    <h2 class="modal6-title">Notifications</h2>
+    <div *ngIf="requestArr.length==0">
+      <p>No friend requests found</p>
+    </div>
+    <div *ngFor="let doc of tempMsgArr;let i=index">
+      <p class="notification-message" (click)="Ok(i)">{{doc}}</p>
+    </div>
+    <div *ngIf="requestArr.length > 0">
+      <div class="notification-item" *ngFor="let notification of requestArr">
+        <p class="notification-sender-name">{{ notification.sender.name }}</p>
+        <p class="notification-sender-email">{{ notification.sender.email }}</p>
+        <p class="notification-message">{{ notification.message }}</p>
+        <span class="notification-time">{{
+          notification.timestamp | date : "medium"
+        }}</span>
+        <div class="button-container">
+          <button class="accept-button" (click)="acceptRequest(notification)">Accept</button>
+          <button class="reject-button" (click)="rejectRequest(notification)">Reject</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal6-footer">
+      <button class="modal6-close-button" (click)="closeModal6()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- //modal 6 ends -->
