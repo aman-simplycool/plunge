@@ -18,7 +18,7 @@ const requestsSchema = mongoose.Schema({
         timestamp: {
           type: Date,
           default: Date.now,
-          expires: '24h'
+          expires: '12h'
         },
         status: {
           type: String,

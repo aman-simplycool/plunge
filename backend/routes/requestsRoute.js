@@ -73,16 +73,10 @@ router.post('/sendReq', async (req, res) => {
         message:msg
       }
       userIdexists.requests.push(body);
-      try {
-        // Save the updated document to the database
-        await userIdexists.save();
-        return res.status(200).json({ message: "Friend request sent successfully" });
-      } catch (error) {
-        console.error("Error saving request:", error);
-        return res.status(500).json({ error: "Internal server error" });
-      }
+      await userIdexists.save();
     }
     // If no pending request exists, create a new request
+   else { 
     const newRequest = new Request({
       userId: receiverId,
       requests: [{
@@ -92,7 +86,30 @@ router.post('/sendReq', async (req, res) => {
         message: msg, // Include the message field in the new request
       }],
     });
-    const newRequest2= new Request({
+    await newRequest.save();
+}
+//saving the details of the request in the sender is too
+const userIdexists2=await Request.findOne({userId:senderId});
+
+    if(userIdexists2){
+      const body={
+        sender:senderId,
+        status:"pending",
+        timestamp:Date.now(),
+        message:msg
+      }
+      userIdexists2.requests.push(body);
+      try {
+        await userIdexists.save();
+        return res.status(200).json({ message: "Friend request sent successfully" });
+      } catch (error) {
+        console.log(error);
+        return res.status(400).json({message:"some error occured"});
+      }
+    }
+    // If no pending request exists, create a new request
+   else { 
+    const newRequest = new Request({
       userId: senderId,
       requests: [{
         sender: senderId,
@@ -100,17 +117,15 @@ router.post('/sendReq', async (req, res) => {
         timestamp: Date.now(),
         message: msg, // Include the message field in the new request
       }],
-    })
-  
+    });
     try {
-      // Save the new request document to the database
       await newRequest.save();
-      await newRequest2.save();
       return res.status(200).json({ message: "Friend request sent successfully" });
     } catch (error) {
-      console.error("Error saving request:", error);
-      return res.status(500).json({ error: "Internal server error" });
+      console.log(error);
+      return res.status(400).json({message:"some error occured"});
     }
+}
   });
 
 // Assuming you have imported the Requests model
