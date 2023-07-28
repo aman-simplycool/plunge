@@ -9,6 +9,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ChatService } from 'src/app/services/chat.service';
 import { of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { userInfo } from 'os';
 @Component({
   selector: 'app-chat-sec',
   templateUrl: './chat-sec.component.html',
@@ -50,25 +51,7 @@ export class ChatSecComponent {
       }, 4000);
     });
 
-    // this.chatService.joinRoomReq(this.userId).subscribe((res) => {
-    //   console.log('joined the room' + res);
-    //   console.log('hello');
-    // });
 
-    // this.chatService.isThereAnyRequest().subscribe((res) => {
-    //   this.friends.push(res);
-    // });
-
-    //  this.chatService.reqGotAcc().subscribe((res)=>{
-    //     this.tempMsgArr.push(res);
-    //     const lastIndex = this.tempMsgArr.length - 1;
-    //     this.removeAfter10Hours(lastIndex);
-    //  })
-    //  this.chatService.reqGotRej().subscribe((res)=>{
-    //   this.tempMsgArr.push(res);
-    //     const lastIndex = this.tempMsgArr.length - 1;
-    //     this.removeAfter10Hours(lastIndex);
-    //  })
   }
 
   async ngOnInit(): Promise<void> {
@@ -116,7 +99,9 @@ export class ChatSecComponent {
       this.token = parsedObject.token;
     } else {
       console.log('user not logged in');
+      this.toast.error("please login first");
       this.router.navigate(['']);
+      return;
     }
 
     const headers = new HttpHeaders().set(
@@ -145,6 +130,7 @@ export class ChatSecComponent {
   }
   friends: any[] = [];
   async getFriends() {
+    if(this.userInfo2){
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.token}`
@@ -159,6 +145,8 @@ export class ChatSecComponent {
       },
     });
   }
+
+}
 
   //search user
 
@@ -299,8 +287,14 @@ export class ChatSecComponent {
           this.closeModal();
         },
         error: (error) => {
-          console.error('Error creating group chat:', error);
-          this.toast.error('some error occured while creating the group');
+          if(error.message==="Please Fill all the feilds"){
+            this.toast.error("please give all the details");
+            return;
+          }
+          if(error.message==="More than 2 users are required to form a group chat"){
+            this.toast.error("there must be atleast 3 memebers in a group");
+            return;
+          }
           this.closeModal();
         },
       });
@@ -445,7 +439,6 @@ console.log(data);
       status: 'pending',
     };
     // this.chatService.reqSent(this.userSelId, body);
-    this.toast.success('sent request');
     this.closeModal5();
     this.service.sendReq('sendReq',httpOptions.headers,data).subscribe(
       {
@@ -467,7 +460,7 @@ console.log(data);
         error:(err)=>{
 
           console.log(err);
-          this.toast.error(err +"this is coming");
+          this.toast.error("some error is coming");
 
       }
       }
@@ -736,6 +729,7 @@ console.log(data);
   requestArr: any[] = [];
   tempMsgArr: any[] = [];
   async getNotifications() {
+    if(this.userInfo2){
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -758,7 +752,10 @@ console.log(data);
           );
         },
       });
-  
+    }
+    else{
+      this.toast.error("please login first");
+    }
   }
   //when some body notices the message(either acceptance or rejection) then it must get removed
   Ok(index: number) {

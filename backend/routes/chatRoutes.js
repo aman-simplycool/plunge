@@ -88,7 +88,7 @@ router.post('/createGroupChat',async (req,res)=>{
       if (users.length < 2) {
         return res
           .status(400)
-          .send("More than 2 users are required to form a group chat");
+          .json({error:"More than 2 users are required to form a group chat"});
       }
     
       users.push(req.user);
@@ -107,7 +107,7 @@ router.post('/createGroupChat',async (req,res)=>{
     
         res.status(200).json(fullGroupChat);
       } catch (error) {
-        res.status(400).json({message:`${error} occured`});
+        res.status(400).json({error:`${error} occured`});
       }
 })
 
