@@ -106,8 +106,8 @@ async sendData(){
     },
     error: (error) => {
       console.error(error.message);
-      
-      this.toast.error("some error occured");
+    
+      this.toast.error(error.message);
     }  
     })
 }
