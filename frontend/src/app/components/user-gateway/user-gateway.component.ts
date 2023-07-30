@@ -42,8 +42,10 @@ async selectImage($event: any) {
   //   this.img_name = this.file.name;
   //   console.log(this.file);
   // }
+
   this.file=$event.target.files[0];
   this.img_name=$event.target.files[0].name;
+  console.log(this.img_name);
 }
 
 async uploadImage() {
@@ -98,25 +100,13 @@ async sendData(){
         this.toast.success("registered sucessfully");
         this.router.navigate(['/login']);
       }
-     else if(res.message==="user already exists")
-      {
-        this.toast.error("user already exists");
-        return;
+      else {
+        this.toast.error(res.body.message); 
       }
-      else if(res.message==="Please Enter all the Fields"){
-        this.toast.error("Please enter all the required fields.");
-        return;
-      }
-      else if(res.message==="Registration is allowed only for @akgec.ac.in email addresses"){
-        this.toast.error("Registration is allowed only for @akgec.ac.in email addresses.");
-          return;
-      }
-
-
-
     },
     error: (error) => {
       console.error(error.message);
+      
       this.toast.error("some error occured");
     }  
     })

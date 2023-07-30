@@ -5,6 +5,7 @@ const { protect } = require("../middleware/auth");
 const router=express.Router();
 router.post('/register',async (req,res)=>{
     const { name, email, password, pic } = req.body;
+
   
     if (!name || !email || !password) {
       
