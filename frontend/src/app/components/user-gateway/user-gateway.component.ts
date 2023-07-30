@@ -87,45 +87,37 @@ async uploadImage() {
 
 
 async sendData(){
-  alert("saving info")
+  
   this.userDetails.value.img=this.imgUrl;
   const data=this.userDetails.value;
   (this.httpservice.sendData(data, 'register')).subscribe({
-    next:(res)=>{ console.log(res)
-      localStorage.setItem("user-info",JSON.stringify(data))
-      this.toast.success("registered sucessfully");
-      this.router.navigate(['/login']);
+    next:(res)=>{ 
+      console.log(res)
+      if(res.status==200){
+        localStorage.setItem("user-info",JSON.stringify(data))
+        this.toast.success("registered sucessfully");
+        this.router.navigate(['/login']);
+      }
+     else if(res.message==="user already exists")
+      {
+        this.toast.error("user already exists");
+        return;
+      }
+      else if(res.message==="Please Enter all the Fields"){
+        this.toast.error("Please enter all the required fields.");
+        return;
+      }
+      else if(res.message==="Registration is allowed only for @akgec.ac.in email addresses"){
+        this.toast.error("Registration is allowed only for @akgec.ac.in email addresses.");
+          return;
+      }
+
+
+
     },
     error: (error) => {
       console.error(error.message);
-      if (error.status === 400) {
-        
-        if (error.message === "user already exists") {
-          
-          this.toast.error("User already exists. Please use a different email.");
-          return;
-        } 
-        else if (error.message === "Please Enter all the Feilds") {
-          
-          this.toast.error("Please enter all the required fields.");
-          return;
-        } 
-        else if (error.message === "Registration is allowed only for @akgec.ac.in email addresses") {
-          
-          this.toast.error("Registration is allowed only for @akgec.ac.in email addresses.");
-          return;
-        } 
-        else {
-         
-          this.toast.error("An error occurred during registration. Please try again later.");
-          return;
-        }
-      } 
-      else {
-        
-        this.toast.error("An unexpected error occurred. Please try again later.");
-        return;
-      }
+      this.toast.error("some error occured");
     }  
     })
 }
