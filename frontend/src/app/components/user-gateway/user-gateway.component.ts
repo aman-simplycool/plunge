@@ -88,29 +88,34 @@ async uploadImage() {
 
 
 
-async sendData(){
+async sendData() {
+  this.userDetails.value.img = this.imgUrl;
+  const data = this.userDetails.value;
   
-  this.userDetails.value.img=this.imgUrl;
-  const data=this.userDetails.value;
-  (this.httpservice.sendData(data, 'register')).subscribe({
-    next:(res)=>{ 
-      console.log(res)
-      if(res.status==200){
-        localStorage.setItem("user-info",JSON.stringify(data))
-        this.toast.success("registered sucessfully");
+  this.httpservice.sendData(data, 'register').subscribe({
+    next: (res) => {
+      console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem("user-info", JSON.stringify(data));
+        this.toast.success("Registered successfully");
         this.router.navigate(['/login']);
-      }
-      else {
-        this.toast.error(res.body.message); 
+      } else if (res.status === 400) {
+        const errorMessage = res.error?.message || "Some error occurred";
+        this.toast.error(errorMessage);
       }
     },
     error: (error) => {
-      console.error(error.message);
-    
-      this.toast.error(error.message);
-    }  
-    })
+      console.error(error);
+      if (error.status === 400) {
+        const errorMessage = error.error?.message || "Some serious error occurred";
+        this.toast.error(errorMessage);
+      } else {
+        this.toast.error("Some error occurred");
+      }
+    }
+  });
 }
+
 
 //login function
 async navigateToLogin(){
