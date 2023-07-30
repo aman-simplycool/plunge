@@ -97,25 +97,34 @@ async sendData(){
       this.router.navigate(['/login']);
     },
     error: (error) => {
-      console.error(error);
+      console.error(error.message);
       if (error.status === 400) {
         
         if (error.message === "user already exists") {
           
           this.toast.error("User already exists. Please use a different email.");
-        } else if (error.message === "Please Enter all the Feilds") {
+          return;
+        } 
+        else if (error.message === "Please Enter all the Feilds") {
           
           this.toast.error("Please enter all the required fields.");
-        } else if (error.message === "Registration is allowed only for @akgec.ac.in email addresses") {
+          return;
+        } 
+        else if (error.message === "Registration is allowed only for @akgec.ac.in email addresses") {
           
           this.toast.error("Registration is allowed only for @akgec.ac.in email addresses.");
-        } else {
+          return;
+        } 
+        else {
          
           this.toast.error("An error occurred during registration. Please try again later.");
+          return;
         }
-      } else {
+      } 
+      else {
         
         this.toast.error("An unexpected error occurred. Please try again later.");
+        return;
       }
     }  
     })
