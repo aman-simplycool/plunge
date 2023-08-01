@@ -49,6 +49,7 @@ async selectImage($event: any) {
 }
 
 async uploadImage() {
+  
   if (this.flag1 === true) {
     if (
       this.userDetails.value.name === "" ||
@@ -62,9 +63,10 @@ async uploadImage() {
       const storageRef = ref(this.storage, "UserImages" + "/" + this.img_name);
 
       try {
+        var pop1=this.toast.loading("please wait for few seconds till we uplaod your image");
         // Upload the image file to the storage location
         console.log(this.img_name);
-        const snapshot = await uploadBytes(storageRef, this.file);
+        // const snapshot = await uploadBytes(storageRef, this.file);
 
         // Get the download URL of the uploaded image
         await uploadBytes(storageRef, this.file).then((snapshot) => {
@@ -72,9 +74,8 @@ async uploadImage() {
             this.imgUrl = url;
           });
         });
-        
-
         alert("Successfully uploaded");
+        pop1.close();
       } catch (error) {
         console.error("Error uploading image:", error);
         alert("An error occurred while uploading the image");
