@@ -12,7 +12,8 @@
         *ngFor="let chatGroup of allChats; let ind = index"
         (click)="selectChat(chatGroup)"
       >
-        <div class="profile-pic"></div>
+    
+        <div *ngIf="chatGroup.isGroupChat===false"  class="profile-pic">{{chatGroup.pic}}</div>
         <div class="chat-info" *ngIf="isSearchActivated == false">
           <h3 class="chat-title">
             {{

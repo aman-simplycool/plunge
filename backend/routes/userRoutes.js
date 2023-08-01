@@ -4,7 +4,7 @@ const generateToken=require('../config/generateToken');
 const { protect } = require("../middleware/auth");
 const router=express.Router();
 router.post('/register',async (req,res)=>{
-    const { name, email, password, pic } = req.body;
+    const { name, email, password, img } = req.body;
 
   
     if (!name || !email || !password) {
@@ -29,7 +29,7 @@ router.post('/register',async (req,res)=>{
       name,
       email,
       password,
-      pic
+      pic:img
     });
   
     if (user) {

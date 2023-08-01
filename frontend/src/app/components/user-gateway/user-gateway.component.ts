@@ -95,14 +95,10 @@ async sendData() {
   this.httpservice.sendData(data, 'register').subscribe({
     next: (res) => {
       console.log(res);
-      if (res.status === 200) {
         localStorage.setItem("user-info", JSON.stringify(data));
         this.toast.success("Registered successfully");
         this.router.navigate(['/login']);
-      } else if (res.status === 400) {
-        const errorMessage = res.error?.message || "Some error occurred";
-        this.toast.error(errorMessage);
-      }
+   
     },
     error: (error) => {
       console.error(error);
