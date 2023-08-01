@@ -30,6 +30,9 @@
           </p>
         </div>
         <div class="chat-info" *ngIf="isSearchActivated == true">
+          <div *ngIf="chatGroup.isGroupChat === false" class="profile-pic">
+            <img [src]="chatGroup.pic" alt="">
+          </div>
           <h3 class="chat-title">{{ chatGroup.name }}</h3>
           <p class="chat-message">{{ chatGroup.email }}</p>
           <p
