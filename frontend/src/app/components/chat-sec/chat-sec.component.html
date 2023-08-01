@@ -31,7 +31,8 @@
         </div>
         <div class="chat-info" *ngIf="isSearchActivated == true">
           <div *ngIf="chatGroup.isGroupChat === false" class="profile-pic">
-            <img src="{{chatGroup.pic}}" alt="">
+            <img [src]="chatGroup.
+            pic" alt="">
           </div>
           <h3 class="chat-title">{{ chatGroup.name }}</h3>
           <p class="chat-message">{{ chatGroup.email }}</p>
@@ -192,7 +193,7 @@
 
 <div *ngIf="showModal3" class="modal3">
   <div class="modal-content">
-    <div class="profile-picture-modal3">
+    <div class="profile-pic">
       <img [src]="userInfo2.pic" alt="">
     </div>
     <h2 class="profile-title">{{ userInfo2.name }}</h2>

@@ -9,7 +9,6 @@
   padding: 20px;
 }
 
-
 .top-bar {
   display: flex;
   align-items: center;
@@ -354,18 +353,7 @@ input[type="text"] {
   background-color: #ff6600;
 }
 
-.profile-picture {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
 
-.profile-pic-modal3 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
 /* //modal 3 ends */
 
 /* modal 2 starts */

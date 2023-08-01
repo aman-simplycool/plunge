@@ -1,0 +1,20 @@
+/* CSS for the parent container */
+.profile-pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px; /* Adjust the width as per your preference */
+    height: 120px; /* Adjust the height as per your preference */
+    border-radius: 50%; /* Makes the image circular */
+    overflow: hidden; /* Clips the image to the rounded shape */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow effect */
+  }
+  
+  /* CSS for the image */
+  .profile-pic img {
+    width: 100%; /* Ensures the image fits inside the parent container */
+    height: 100%; /* Ensures the image fits inside the parent container */
+    object-fit: cover; /* Keeps the image aspect ratio and covers the entire container */
+    object-position: center center; /* Centers the image within the container */
+  }
+  

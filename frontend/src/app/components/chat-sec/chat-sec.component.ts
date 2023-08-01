@@ -13,7 +13,7 @@ import { userInfo } from 'os';
 @Component({
   selector: 'app-chat-sec',
   templateUrl: './chat-sec.component.html',
-  styleUrls: ['./chat-sec.component.css'],
+  styleUrls: ['./chat-sec.component.css', '../extra.css']
 })
 export class ChatSecComponent {
   private typingTimeout: any;
