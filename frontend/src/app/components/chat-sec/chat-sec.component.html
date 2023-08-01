@@ -13,7 +13,9 @@
         (click)="selectChat(chatGroup)"
       >
     
-        <div *ngIf="chatGroup.isGroupChat===false"  class="profile-pic">{{chatGroup.pic}}</div>
+      <div class="profile-pic" *ngIf="chatGroup.isGroupChat===false">
+        <img [src]="chatGroup.pic" alt="">
+      </div>
         <div class="chat-info" *ngIf="isSearchActivated == false">
           <h3 class="chat-title">
             {{
@@ -30,9 +32,8 @@
           </p>
         </div>
         <div class="chat-info" *ngIf="isSearchActivated == true">
-          <div *ngIf="chatGroup.isGroupChat === false" class="profile-pic">
-            <img [src]="chatGroup.
-            pic" alt="">
+          <div class="profile-pic">
+            <img [src]="chatGroup.pic" alt="">
           </div>
           <h3 class="chat-title">{{ chatGroup.name }}</h3>
           <p class="chat-message">{{ chatGroup.email }}</p>

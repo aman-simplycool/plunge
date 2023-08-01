@@ -3,8 +3,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 120px; /* Adjust the width as per your preference */
-    height: 120px; /* Adjust the height as per your preference */
+    width: 80px; /* Adjust the width as per your preference */
+    height: 80px; /* Adjust the height as per your preference */
     border-radius: 50%; /* Makes the image circular */
     overflow: hidden; /* Clips the image to the rounded shape */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow effect */
