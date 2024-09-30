@@ -18,10 +18,7 @@ const path = require('path');
 const app=express();
 app.use(express.json());
 
-app.use(cors({
-  origin: '*',
-  credentials: true,
-}));
+app.use(cors());
 app.use("/api/user",userRoutes);
 app.use("/api/chat",protect,chatRoutes);
 app.use("/api/message",protect,MessageRouter);
@@ -69,14 +66,6 @@ const io = require("socket.io")(server, {
       console.log("new message");
       io.in(newMessageReceived.chat._id).emit("message received",newMessageReceived);
      });
-    //  socket.on("room for friend request",(senderId,receiverId)=>{
-    //   const roomId = `${senderId}-${receiverId}`;
-    //   socket.join(roomId);
-    //   console.log("room joined for requests");
-    //   socket.emit("connected");
-    // })  
-
-   
     var roomId,rId;
     socket.on("request sent",(body)=>{
       const{req,receiverId}=body;
@@ -109,4 +98,4 @@ const io = require("socket.io")(server, {
   })  
   
   });
-  
+  module.exports = app;
