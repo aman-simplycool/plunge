@@ -19,15 +19,8 @@ const app=express();
 app.use(express.json());
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (origin && origin.startsWith("http://localhost")) {
-      // Allow all localhost origins
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,  // If you need to allow cookies or authorization headers
+  origin: '*',
+  credentials: true,
 }));
 app.use("/api/user",userRoutes);
 app.use("/api/chat",protect,chatRoutes);
@@ -36,8 +29,6 @@ app.use("/api/request",protect,requestRouter);
 app.use(NotFound);
 app.use(errorHandler);
 const PORT=process.env.PORT||5001;
-
-
 
   app.get('/', (req, res) => {
     console.log('server is up');
