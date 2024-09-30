@@ -13,10 +13,6 @@ router.post('/register',async (req,res)=>{
     }
 
     const emailDomain = email.split("@")[1];
-    if (emailDomain !== "akgec.ac.in") {
-      return res.status(400).json({ message: "Registration is allowed only for @akgec.ac.in email addresses" });
-    }
-  
     const userExists = await User.findOne({email});
   
     if (userExists) {  

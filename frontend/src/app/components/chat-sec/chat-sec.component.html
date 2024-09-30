@@ -1,4 +1,5 @@
 <div class="main-container">
+  <audio autoplay src="../../../assets/bgmusic2.mp3"></audio>
   <div class="chat-list-container">
     <div class="top-bar">
       <div class="search-bar">
@@ -6,17 +7,22 @@
       </div>
       <button class="add-group-btn" (click)="openModal()">+</button>
     </div>
+    
     <ul class="chat-items">
       <li
         class="chat-item"
         *ngFor="let chatGroup of allChats; let ind = index"
         (click)="selectChat(chatGroup)"
       >
-    
-      <div class="profile-pic" *ngIf="chatGroup.isGroupChat===false">
-        <img [src]="chatGroup.pic" alt="">
-      </div>
-        <div class="chat-info" *ngIf="isSearchActivated == false">
+      <!-- when user is not searching anything but having few contacts already -->
+      <div class="chat-info" *ngIf="!isSearchActivated">
+        <div class="profile-pic">
+          <img
+            src="../../../assets/img/profilePic.png"
+            alt="Profile Picture"
+          />
+        </div>
+        <div class="chat-details">
           <h3 class="chat-title">
             {{
               chatGroup.isGroupChat
@@ -24,25 +30,30 @@
                 : getSender(chatGroup.users)
             }}
           </h3>
-          <p
-            class="chat-message latest-message"
-            *ngIf="chatGroup.latestMessage"
-          >
+          <p class="latest-message" *ngIf="chatGroup.latestMessage">
             {{ chatGroup.latestMessage.content }}
           </p>
         </div>
+      </div>
+      
+        <!-- for individual users -->
         <div class="chat-info" *ngIf="isSearchActivated == true">
           <div class="profile-pic">
-            <img [src]="chatGroup.pic" alt="">
+            <img 
+            src="../../../assets/img/profilePic.png" 
+            alt="Profile Picture"
+          />
           </div>
-          <h3 class="chat-title">{{ chatGroup.name }}</h3>
-          <p class="chat-message">{{ chatGroup.email }}</p>
-          <p
-            class="chat-message latest-message"
-            *ngIf="chatGroup.latestMessage"
-          >
-            {{ chatGroup.latestMessage.content }}
-          </p>
+          <div>
+            <h3 class="chat-title">{{ chatGroup.name }}</h3>
+            <p class="chat-message">{{ chatGroup.email }}</p>
+            <p
+              class="chat-message latest-message"
+              *ngIf="chatGroup.latestMessage"
+            >
+              {{ chatGroup.latestMessage.content }}
+            </p>
+          </div>
         </div>
       </li>
     </ul>
@@ -51,10 +62,10 @@
     <div class="chat-window">
       <div class="chat-header">
         <div class="navbar">
-          <h2 class="chat-title" *ngIf="selectedChat.length == 0">Chats</h2>
-          <h2 class="chat-title" *ngIf="selectedChat.length > 0">
+          <div class="nav-title" *ngIf="selectedChat.length == 0">select any person from left side</div>
+          <div class="nav-title" *ngIf="selectedChat.length > 0">
             {{ selectedChat }}
-          </h2>
+          </div>
           <div *ngIf="isSomeoneTyping">
             <p style="color:white">..typing</p>
           </div>
@@ -62,32 +73,30 @@
             <button class="notifications-button" (click)="openModal6()">
               🔔
             </button>
-        <div *ngIf="isVerified">
-            <button
-              class="members-button"
-              *ngIf="isgroupChat"
-              (click)="openModal4()"
-            >
-              &#8230;
-            </button>
-            <button
-              class="info-button"
-              *ngIf="isgroupChat && isUserAdmin"
-              (click)="openModal2()"
-            >
-              edit
-            </button>
-          </div> 
+            <div *ngIf="isVerified">
+              <button
+                class="members-button"
+                *ngIf="isgroupChat"
+                (click)="openModal4()"
+              >
+                &#8230;
+              </button>
+              <button
+                class="info-button"
+                *ngIf="isgroupChat && isUserAdmin"
+                (click)="openModal2()"
+              >
+                edit
+              </button>
+            </div>
             <button class="profile-button" (click)="openModal3()">
               {{ userInfo2.name.charAt(0) }}
             </button>
           </div>
         </div>
-      </div>
-      <div class="no-chat" *ngIf="!selectedChat">
-        <p>No chat has been selected.<br>please use the search bar to search someone you may know</p>
         
-      </div>      
+      </div>
+
       <div class="chat-messages">
         <div *ngFor="let message of temparrChat2" class="message-container">
           <div
@@ -96,19 +105,20 @@
               'message-left': message.sender._id !== userId
             }"
             class="message-card"
+            [attr.aria-label]="message.sender._id === userId ? 'Sent message' : 'Received message'"
           >
-            <p class="message-content">{{ message.content }}</p>
+            <span class="message-content">{{ message.content }}</span>
           </div>
         </div>
-      </div>
-      <div class="message-input" *ngIf="isVerified">
-        <input
-          type="text"
-          (input)="typing()"
-          placeholder="Type a message"
-          [(ngModel)]="message"
-        />
-        <button class="send-button" (click)="sendMessage()">Send</button>
+        <div class="message-input" *ngIf="isVerified">
+          <input
+            type="text"
+            (input)="typing()"
+            placeholder="Type a message"
+            [(ngModel)]="message"
+          />
+          <button *ngIf="message" class="send-button" (click)="sendMessage()">Send</button>
+        </div>
       </div>
     </div>
   </div>

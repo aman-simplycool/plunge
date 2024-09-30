@@ -37,6 +37,9 @@ export class ChatSecComponent {
         }
       });
     }
+    else if(res.sender._id==this.userId){
+      this.temparrChat2.push(res);
+    }
     });
   
     //listening for someone typing
@@ -90,7 +93,6 @@ export class ChatSecComponent {
   server: string = 'http://localhost:5000';
   async getChats() {
     var userInfo = localStorage.getItem('userInfo');
-    console.log(userInfo);
 
     if (userInfo) {
       const parsedObject: { token: string } = JSON.parse(userInfo);
@@ -98,7 +100,6 @@ export class ChatSecComponent {
       this.userId = this.userInfo2._id;
       this.token = parsedObject.token;
     } else {
-      console.log('user not logged in');
       this.toast.error("please login first");
       this.router.navigate(['']);
       return;
@@ -116,8 +117,6 @@ export class ChatSecComponent {
           this.allChats.push(data);
           this.tempArr.push(data);
         });
-
-        console.log(this.allChats);
       });
   }
 
@@ -138,7 +137,6 @@ export class ChatSecComponent {
     this.service.getRequests('getFriends', headers, this.userId).subscribe({
       next: (res) => {
         this.friends = res;
-        console.log(this.friends);
       },
       error: (err) => {
         this.toast.error('could not load your firends list');
@@ -163,7 +161,6 @@ export class ChatSecComponent {
       .subscribe((res) => {
         this.users = res;
       });
-    console.log(this.users);
   }
 
   // Declare a variable to hold the friend status
@@ -210,7 +207,6 @@ export class ChatSecComponent {
     if (searchQuery.length === 0) {
       this.allChats = this.tempArr;
       this.isSearchActivated = false;
-      console.log(this.allChats);
     } else {
       this.isSearchActivated = true;
       const headers = new HttpHeaders().set(
@@ -221,7 +217,6 @@ export class ChatSecComponent {
         .userGetData(`allUsers?search=${searchQuery}`, headers)
         .subscribe((res) => {
           this.allChats = res;
-          console.log(this.allChats);
         });
     }
   }
@@ -282,7 +277,6 @@ export class ChatSecComponent {
       .sendChatData(reqBody, 'createGroupChat', httpOptions.headers)
       .subscribe({
         next: (response) => {
-          console.log('Group chat created successfully:', response);
           this.toast.success('group chat created');
           this.closeModal();
         },
@@ -313,9 +307,8 @@ export class ChatSecComponent {
   //// Function to open the modal
   isModal5Open: boolean = false;
   preMadeMessages: string[] = [
-    "Hi, let's be friends!",
+    "Hi,let's be friends!",
     'Looking forward for some collaboration in project!',
-    'i found you very pretty',
     'want some carrer guidance',
     'want to go on a date with you',
   ];
@@ -333,7 +326,6 @@ export class ChatSecComponent {
   //selcting the reason first
   async selectMessage(message: string) {
     this.tryMessage = message;
-    console.log(this.tryMessage);
   }
 
   async acceptRequest(notification: any) {
@@ -343,7 +335,6 @@ export class ChatSecComponent {
       senderId: notification.sender._id,
       status: "accepted",
     };
-console.log(data);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -356,7 +347,6 @@ console.log(data);
       .changeStatus('updateStatus', httpOptions.headers, data)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.toast.success('accepted request');
           // this.chatService.reqAccept(roomId, this.userInfo2.name);
           const index = this.requestArr.findIndex(
@@ -368,7 +358,6 @@ console.log(data);
           }
         },
         error: (err) => {
-          console.log(err);
           this.toast.error('some internal error occured');
         },
       });
@@ -405,7 +394,6 @@ console.log(data);
           }
         },
         error: (err) => {
-          console.log(err);
           this.toast.error('some internal error occured');
         },
       });
@@ -427,7 +415,6 @@ console.log(data);
       senderId: this.userId,
       receiverId: this.userSelId,
     };
-    console.log(data);
     var body = {
       sender: {
         _id: this.userId,
@@ -458,8 +445,6 @@ console.log(data);
           }
         },
         error:(err)=>{
-
-          console.log(err);
           this.toast.error("some error is coming");
 
       }
@@ -497,7 +482,6 @@ console.log(data);
         
       }
     }
-   console.log(this.userSelId);
     if (flag==1 && !this.friendStatusChecked) {
       // Wait for a brief moment (you can adjust the time if needed)
       await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -534,9 +518,7 @@ console.log(data);
           .createChat('accessChat', httpOptions.headers, data)
           .subscribe({
             next: (res) => {
-              console.log('Chat created or retrieved successfully:', res);
               this.chatId=res._id;
-              console.log(this.chatId);
             },
             error: (error) => {
               console.error('Error creating or retrieving chat:', error);
@@ -547,9 +529,7 @@ console.log(data);
       this.chatSubscription = this.service
         .getChats('getMessages', httpOptions.headers, this.chatId)
         .subscribe((res) => {
-          console.log(res);
           this.temparrChat2 = res;
-          console.log(this.temparrChat2);
         });
       // getting all the members of the group
      if(chat.isGroupChat)
@@ -558,10 +538,8 @@ console.log(data);
         .subscribe({
           next: (res) => {
             this.allUsersOfgrp = res;
-            console.log(this.allUsersOfgrp);
           },
           error: (err) => {
-            console.log(err);
           },
         });
       }
@@ -575,8 +553,6 @@ console.log(data);
   allUsersOfgrp: any[] = [];
 
   async openModal2() {
-    console.log(this.friends);
-    console.log(this.users2);
     this.isModal2Open = true;
   }
 
@@ -636,9 +612,6 @@ console.log(data);
   tempGrpUser2: any[] = [];
 
   async isUserSelected2(user: any) {
-    console.log(user);
-    console.log(this.allUsersOfgrp);
-
     if (this.allUsersOfgrp.some((id) => id === user._id)) return 1;
     if (this.tempGrpUser2.some((u) => u._id == user._id)) return 2;
     else return 3;
@@ -674,8 +647,6 @@ console.log(data);
   //is Someone typing
   isSomeoneTyping: boolean = false;
   async typing() {
-    console.log('typing');
-
     this.chatService.someoneTyping(this.chatId);
   }
 
@@ -685,8 +656,6 @@ console.log(data);
       chatId: this.chatId,
       userId: this.userId,
     };
-    console.log(data);
-
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -696,7 +665,6 @@ console.log(data);
     const res = this.service
       .sendChats('sendMessage', httpOptions.headers, data)
       .subscribe((result) => {
-        console.log(result);
         this.chatService.sendMessage(result);
       });
     this.message = '';

@@ -15,35 +15,34 @@ const path = require('path');
 
 
 
-
 const app=express();
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    if (origin && origin.startsWith("http://localhost")) {
+      // Allow all localhost origins
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,  // If you need to allow cookies or authorization headers
+}));
 app.use("/api/user",userRoutes);
 app.use("/api/chat",protect,chatRoutes);
 app.use("/api/message",protect,MessageRouter);
 app.use("/api/request",protect,requestRouter);
-// app.use(NotFound);
-// app.use(errorHandler);
-const PORT=process.env.PORT||5000;
+app.use(NotFound);
+app.use(errorHandler);
+const PORT=process.env.PORT||5001;
 
 
 
-
-if (process.env.NODE_ENV === 'production') {
-  // Serve the static files from the frontend build folder
-  app.use(express.static(path.join(__dirname, '../frontend/dist/frontend')));
-
-  // Send the index.html file from the frontend build folder
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../frontend/dist/frontend', 'index.html'))
-  );
-} else {
   app.get('/', (req, res) => {
+    console.log('server is up');
     res.send('API is running..');
   });
-}
 
 
 
@@ -51,8 +50,7 @@ const server=app.listen(PORT,console.log(`server is running at port ${PORT}`));
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-      origin: "http://localhost:4200",
-      
+      origin: "*",
     },
   });
   
@@ -79,8 +77,6 @@ const io = require("socket.io")(server, {
       var chat = newMessageReceived.chat;
       console.log("new message");
       io.in(newMessageReceived.chat._id).emit("message received",newMessageReceived);
-    
-      
      });
     //  socket.on("room for friend request",(senderId,receiverId)=>{
     //   const roomId = `${senderId}-${receiverId}`;

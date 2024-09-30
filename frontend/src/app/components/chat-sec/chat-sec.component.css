@@ -1,77 +1,104 @@
 .main-container {
   display: flex;
   height: 100vh;
+  background-color: #000;
 }
 
 .chat-list-container {
-  flex: 1;
-  background-color: #f2f2f2;
+  background-color: #211f1f;
   padding: 20px;
 }
 
+/* left side */
+
+/* search bar starts from 21 */
 .top-bar {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  justify-content: space-between; /* Space between elements */
+  padding: 10px 15px; /* Add padding for aesthetics */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.search-bar {
+  margin-right: 35px; /* Space between search bar and button */
+  position: relative; /* For absolute positioning of the icon */
 }
 
 .search-bar input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 10px 40px 10px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333; 
+  background-color: #fff; /* White background for the input */
+  transition: all 0.3s ease; /* Smooth transition for effects */
+}
+
+.search-bar input::placeholder {
+  color: #aaa; /* Light gray for placeholder text */
+  opacity: 1; /* Ensure placeholder is fully visible */
+}
+
+.search-bar input:focus {
+  outline: none; /* Remove focus outline */
+  border: 2px solid #337ab7; /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(51, 122, 183, 0.5); /* Blue shadow on focus */
 }
 
 .add-group-btn {
-  background-color: #337ab7;
-  color: white;
-  border: none;
-  font-size: 18px;
-  padding: 6px 12px;
-  border-radius: 50%;
-  cursor: pointer;
+  background-color: #337ab7; /* Blue background */
+  color: white; /* White text color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 20px; /* Increase font size */
+  width: 40px; /* Fixed width */
+  height: 40px; /* Fixed height */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover */
+  margin-left: 10px; /* Space between button and input */
 }
 
-.navbar {
+.add-group-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+/* stylings for left side bar where existing profiles are begin shown */
+.chat-info {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  background-color: #333333;
-  color: white;
-  padding: 10px;
+  padding: 12px; /* Space around the chat info */
+  border-radius: 8px; /* Rounded corners */
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  margin-bottom: 12px; /* Space between different chats */
 }
 
-/* //for chat cards that come aftersearching for any user */
-.chat-item:hover {
-  background-color: #d8cccc; /* Change to your desired background color */
-  cursor: pointer;
+.profile-pic {
+  width: 48px; /* Set a fixed width for the profile picture */
+  height: 48px; /* Set a fixed height for the profile picture */
+  border-radius: 50%; /* Make it circular */
+  overflow: hidden; /* Hide overflow */
+  margin-right: 10px; /* Space between profile pic and text */
 }
 
-.chat-window-container {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff;
-  padding: 20px;
-  position: relative;
-  overflow: hidden;
+.profile-pic img {
+  width: 100%; /* Image fills the container */
+  height: auto; /* Maintain aspect ratio */
 }
 
-
-
-.chat-title {
-  margin: 0;
+.chat-details {
+  flex-grow: 1; /* Allow this section to grow and take up remaining space */
+}
+/* chat header starts at line no 68 */
+.chat-header {
+  background-color: #333; /* Background color for the chat header */
+  padding: 10px; /* Padding around the header */
 }
 
-.nav-buttons {
-  display: flex;
-  align-items: center;
-}
-
-/* profile and info button css starts */
 .notifications-button {
   font-size: 20px;
   padding: 10px;
@@ -103,44 +130,116 @@
 .info-button {
   background-color: #337ab7;
 }
+
+.nav-buttons {
+  display: flex; /* Use Flexbox for buttons */
+  align-items: center; /* Center buttons vertically */
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #333333;
+  color: white;
+  padding: 10px;
+  position: relative; /* For positioning the title */
+}
+
+.navbar .nav-title {
+  position: absolute; /* Positioning it absolutely */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust to center */
+  font-size: 1.2rem; /* Slightly larger font for title */
+  font-weight: bold; /* Bold title */
+  color: white; /* Darker color for better contrast */
+  margin: 0; /* Remove default margin */
+}
+
+.nav-buttons {
+  display: flex; /* Align buttons in a row */
+  margin-left: auto; /* Push buttons to the right */
+}
+
+/* chat header styling ends here */
+
+.latest-message {
+  font-size: 0.9rem; /* Smaller font for messages */
+  color: #777; /* Gray color for message */
+  margin: 4px 0 0; /* Margin for spacing */
+}
+
+/*styling end at line no 90 fro left side profiles */
+
+
+/* styling starts for searching user profile at line no 94*/
+.chat-items {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+/* styling starts for searching user profile at line no 94 ends */
+/* //for chat cards that come after searching and clicking on any user */
+
+
+/* it ends here */
+
+
+.chat-window-container {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+}
+
+/* profile and info button css starts */
+
 /* //profile buttons and info buttons ends */
 
 
 
-/* //message sent input bar */
+/* //message sent input bar at line no 167 */
 .message-input {
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #f5f5f5;
-  position: absolute;
-  bottom: 0;
+  background-color: #5a4a4a; /* Background color of the input */
+  position: absolute; /* Position it relative to the chat-messages container */
+  bottom: 0; /* Position it at the bottom of the container */
   left: 0;
-  width: 100%;
+  width: 100%; /* Full width to match chat-messages */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Optional shadow for effect */
+  z-index: 10; /* Ensure it is above other elements */
 }
 
 .message-input input {
-  flex: 1;
+  flex: 1; /* Make input flexible to take up space */
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #242020; /* Border for the input */
+  border-radius: 4px; /* Rounded corners */
   font-size: 14px;
 }
 
 .send-button {
-  background-color: #337ab7;
+  background-color: #337ab7; /* Send button color */
   color: white;
   border: none;
   font-size: 16px;
-  padding: 6px 12px;
+  padding: 8px 12px; /* Button padding */
   border-radius: 4px;
   cursor: pointer;
   margin-left: 5px;
-  margin-right: 15px;
+  margin-right: 15px; /* Spacing between input and button */
 }
+
 /*message input bar ends*/
-
-
 
 
 .latest-message {
@@ -150,18 +249,7 @@
   margin-top: 3px;
 }
 
-.message-container {
-  display: flex;
-  margin-bottom: 10px;
-  width: 100%;
-}
 
-.message-card {
-  display: inline-block;
-  padding: 10px;
-  border-radius: 5px;
-  width: 100%;
-}
 
 .message-left {
   /* background-color: #e1f5fe; */
@@ -172,24 +260,53 @@
   /* background-color: #f5f5f5; */
   text-align: right;
 }
+
+/*from line 212 css starts for chat messages that showcases the actual conversation */
+.chat-messages {
+  background-image: url('../../../assets/img/bgimg3.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  padding: 10px; /* Add some padding to the chat messages */
+  height: calc(100vh - 100px); /* Adjust based on your header/footer */
+  overflow-y: auto; /* Allow scrolling if messages exceed height */
+}
+
+.message-container {
+  margin-bottom: 10px; /* Space between messages */
+  display: flex; /* Use flexbox for positioning */
+  justify-content: flex-start; /* Default alignment */
+}
+
+.message-card {
+  max-width: 75%; /* Limit the width of the message */
+  padding: 10px 15px; /* Padding inside the message */
+  border-radius: 20px; /* Rounded corners */
+  position: relative; /* For pseudo-elements */
+  color: white; /* Text color */
+  word-wrap: break-word; /* Ensure long words break correctly */
+}
+
+.message-right {
+  background-color: #3e433e; /* Color for messages sent by the user */
+  align-self: flex-end; /* Align right for sent messages */
+  margin-left: auto; /* Push to the right */
+}
+
+.message-left {
+  background-color: #3d3b49; /* Color for received messages */
+  align-self: flex-start; /* Align left for received messages */
+  margin-right: auto; /* Push to the left */
+}
+
 .message-content {
-  margin: 0;
+  margin: 0; /* Remove default margin */
 }
 
-.chat-messages::-webkit-scrollbar {
-  width: 6px;
-}
 
-.chat-messages::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 3px;
-}
-
-.chat-messages::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-  border-radius: 3px;
-}
-/* messages css ends */
+/* from line 212 to 267 styling for messages is there*/
 
 /* //modal first strat */
 .modal {

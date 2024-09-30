@@ -23,7 +23,6 @@ userDetails=new FormGroup({
 
 async logIn(){
   const data=this.userDetails.value;
-  console.log(data);
  
   this.service.sendData(data,'login').subscribe({
     next:(res)=>{
@@ -33,15 +32,16 @@ async logIn(){
     this.router.navigate(['/home'])
     },
     error:(err)=>{
-      if(err.message==="please give both the details"){
+      console.log(err.error);
+      if(err.error.message==="please give both the details"){
         this.toast.error("please give both the details");
         return;
       }
-      if(err.message==="Password is invalid"){
+      if(err.error.message==="Password is invalid"){
         this.toast.error("password is invalid");
         return;
       }
-      if(err.message==="User not registered"){
+      if(err.error.message==="User not registered"){
         this.toast.error("user is not registerd");
         return;
       }

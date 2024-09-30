@@ -1,17 +1,22 @@
 <div class="body">
+  <audio autoplay loop src="../../../assets/bgmusic.mp3"></audio>
+
   <div class="container">
-    <form [formGroup]="userDetails">
-      <div class="form-group">
+    <div class="formHeading">
+      "It didn't all work out the way we wanted. We're not all here, but we did achieve something."-PROFESSOR
+    </div>
+    <form [formGroup]="userDetails" class="form-group">
+      <div>
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required  formControlName="name">
       </div>
 
-      <div class="form-group">
+      <div>
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required  formControlName="email">
       </div>
 
-      <div class="form-group">
+      <div>
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required  formControlName="password">
       </div>
@@ -26,7 +31,7 @@
 </div>
       
 
-      <div class="form-group">
+      <div>
         <button type="submit" (click)="sendData()">Sign Up</button>
       </div>
 

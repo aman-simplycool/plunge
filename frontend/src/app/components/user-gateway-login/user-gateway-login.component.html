@@ -1,4 +1,6 @@
-<div class="container">
+<div class="body">
+  <audio autoplay #audioPlayer loop src="../../../assets/bgmusic"></audio>
+  <div class="container">
     <h2>Login</h2>
     <form [formGroup]="userDetails">
       <div class="form-group">
@@ -9,7 +11,7 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required formControlName="password">
       </div>
-      <button type="submit" (click)="logIn()">Login</button>
+      <button type="submit" (click)="logIn()" class="btn">Login</button>
     </form>
+  </div>
 </div>
-  

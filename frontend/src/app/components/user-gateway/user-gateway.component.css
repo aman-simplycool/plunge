@@ -1,59 +1,133 @@
-
+.body {
+  background-image: url('../../../assets/img/bg1.jpg'); /* Background Image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  display: flex;
+  justify-content: flex-end; /* Aligns the container to the right */
+  align-items: center; /* Centers the container vertically */
+  padding-right: 30px; /* Adds space from the right edge */
+}
 
 .container {
-  max-width: 300px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+ /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Blurs the background behind the form */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Stronger shadow for a floating effect */
+  max-width: 350px;
+  width: 100%;
+  color: #fff; /* White text color for dark backgrounds */
+}
+
+.formHeading {
+  color: white;
+  font-size: larger;
+  font-family: cursive;
+  opacity: 0; /* Start hidden */
+  animation: fadeIn 3s ease-in forwards; /* Use keyframes for fade-in */
+  text-align: center; /* Center text */
+  margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Keyframes for fade-in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start with opacity 0 */
+    transform: translateY(-10px); /* Move up slightly */
+  }
+  to {
+    opacity: 1; /* End with opacity 1 */
+    transform: translateY(0); /* Move to original position */
+  }
+}
+
+.form-group {
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #d1d1d1; /* Light gray to soften label text */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
   box-sizing: border-box;
-  background-color: #f5f5f5; /* Set your desired background color */
-  background-image: linear-gradient(135deg, #f5f5f5, #e6e6e6); /* Add a subtle gradient */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+  border: 1px solid #555; /* Border to make input stand out */
+  border-radius: 8px; /* Rounded corners */
+  background-color: rgba(255, 255, 255, 0.2); /* Slight transparency */
+  color: #fff;
+  font-size: 14px;
+}
+
+.form-group input::placeholder {
+  color: #d1d1d1; /* Light gray placeholders */
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4CAF50; /* Green border on focus */
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); /* Soft green glow */
+}
+
+.form-group button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.form-group button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.form-group .login-link {
+  text-align: center;
+  margin-top: 15px;
+  color: #d1d1d1; /* Light gray text */
+}
+
+.phtos p {
+  font-size: 18px;
+  font-weight: 300;
+  color: #d1d1d1; /* Soft gray for photo text */
+}
+
+.phtos input {
+  font-size: 15px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #fff;
+  border: 1px solid #555;
+  background-color: rgba(255, 255, 255, 0.2); /* Match other input styles */
+}
+
+.phtos button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.phtos button:hover {
+  background-color: #45a049; /* Darker green on hover */
 }
 
 
-
-
-
-/* Rest of your CSS styles remain the same */
-
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box; 
-  }
-
-  .form-group button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-
-  .form-group .login-link {
-    text-align: center;
-    margin-top: 10px;
-  }
-
-  .phtos p{
-    font-size: 20px;
-    font-weight: 300;
-}
-
-.phtos input{
-    font-size: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}

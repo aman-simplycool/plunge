@@ -5,7 +5,7 @@ import { Socket,io } from 'socket.io-client';
   providedIn: 'root'
 })
 export class ChatService {
-url:string="https://plunge-production.up.railway.app";  
+url:string="http://localhost:5001";  
 private socket=io(this.url);
 joinRoom(id:string){
   this.socket.emit('setup',id)
