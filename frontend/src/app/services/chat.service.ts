@@ -5,7 +5,7 @@ import { Socket,io } from 'socket.io-client';
   providedIn: 'root'
 })
 export class ChatService {
-url:string="http://localhost:5001";  
+url:string="https://plunge-heta.onrender.com/";  
 private socket=io(this.url);
 joinRoom(id:string){
   this.socket.emit('setup',id)
