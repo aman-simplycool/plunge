@@ -9,7 +9,7 @@ const userRoutes=require('./routes/userRoutes')
 const chatRoutes=require('./routes/chatRoutes')
 const MessageRouter=require("./routes/messageRoutes");
 const requestRouter=require("./routes/requestsRoute");
-const { NotFound,errorHandler} = require("./middleware/errorMiddleware")
+
 const { protect } = require("./middleware/auth")
 const path = require('path');
 
@@ -23,8 +23,7 @@ app.use("/api/user",userRoutes);
 app.use("/api/chat",protect,chatRoutes);
 app.use("/api/message",protect,MessageRouter);
 app.use("/api/request",protect,requestRouter);
-app.use(NotFound);
-app.use(errorHandler);
+
 const PORT=process.env.PORT||5001;
 
   app.get('/', (req, res) => {
