@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-  private userapiUrl="https://plunge-heta.onrender.com//api/user";
-  private chatapiUrl="https://plunge-heta.onrender.com//api/chat"
-  private messageUrl="https://plunge-heta.onrender.com//api/message"
-  private requestapiUrl="https://plunge-heta.onrender.com//api/request"
+  private userapiUrl="https://plunge-heta.onrender.com/api/user";
+  private chatapiUrl="https://plunge-heta.onrender.com/api/chat"
+  private messageUrl="https://plunge-heta.onrender.com/api/message"
+  private requestapiUrl="https://plunge-heta.onrender.com/api/request"
   constructor(private http: HttpClient) { }
 
   
