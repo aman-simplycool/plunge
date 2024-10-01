@@ -90,7 +90,7 @@ export class ChatSecComponent {
   allChats: any[] = [];
   tempArr1: any[] = [];
   userInfo2: any = [];
-  server: string = 'http://localhost:5000';
+  server: string = 'http://localhost:5001';
   async getChats() {
     var userInfo = localStorage.getItem('userInfo');
 
