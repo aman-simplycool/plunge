@@ -2,41 +2,41 @@
   <audio autoplay src="../../../assets/bgmusic.mp3"></audio>
 
   <div class="container">
-    <div class="formHeading">
-      "It didn't all work out the way we wanted. We're not all here, but we did achieve something."-PROFESSOR
+    <div class="form-heading">
+      "It didn't all work out the way we wanted. We're not all here, but we did achieve something." - PROFESSOR
     </div>
     <form [formGroup]="userDetails" class="form-group">
-      <div>
+      <div class="input-group">
         <label for="name">Name</label>
-        <input type="text" id="name" name="name" required  formControlName="name">
+        <input type="text" id="name" name="name" required formControlName="name" class="input-field">
       </div>
 
-      <div>
+      <div class="input-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required  formControlName="email">
+        <input type="email" id="email" name="email" required formControlName="email" class="input-field">
       </div>
 
-      <div>
+      <div class="input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required  formControlName="password">
+        <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" name="password" required formControlName="password" class="input-field">
+        <!-- Show/Hide Password Toggle -->
+        <label class="show-password">
+          <input type="checkbox" (change)="togglePasswordVisibility()" class="checkbox"> Show Password
+        </label>
       </div>
 
-      <div class="phtos">
-        <div class="prof_img">
-            <p>select profile image</p>
-            <input type="file" (change)="selectImage($event)">
-            <button (click)="uploadImage()" *ngIf="flag1">upload</button> 
-        </div>
-         
-</div>
-      
-
-      <div>
-        <button type="submit" (click)="sendData()">Sign Up</button>
+      <div class="profile-img">
+        <p>Select profile image</p>
+        <input type="file" (change)="selectImage($event)" class="file-input">
+        <button (click)="uploadImage()" *ngIf="flag1" class="upload-btn">Upload</button>
       </div>
 
-      <div class="form-group login-link">
-        <p>Already have an account? <button (click)="navigateToLogin()">Log in</button></p>
+      <div class="submit-container">
+        <button type="submit" (click)="sendData()" class="submit-btn">Sign Up</button>
+      </div>
+
+      <div class="login-link">
+        <p>Already have an account? <button (click)="navigateToLogin()" class="login-btn">Log in</button></p>
       </div>
     </form>
   </div>

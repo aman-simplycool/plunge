@@ -1,61 +1,126 @@
-/* Styles for the component */
+/* Full-screen Background */
 .body {
-  background-color: black;
-  background-image: url('../../../assets/img/bgimg2.jpg'); /* Background Image */
-  background-size: contain;
+  background-image: url("../../../assets/img/bgimg2.jpg"); /* Wallpaper for background */
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  margin: 0;
-  padding: 0;
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
+  height: 100vh;
+  width: 100%;
   display: flex;
-  justify-content: flex-end; /* Centers the container horizontally */
-  align-items: center; /* Centers the container vertically */
-  padding-right: 30px;
+  justify-content: center; /* Keeps the background image centered */
+  align-items: center;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  padding: 0;
+  margin: 0;
+  position: relative;
 }
 
+/* Container for the Login Form */
 .container {
-  background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
-  backdrop-filter: blur(10px);
-  padding: 30px;
+  background: rgba(0, 0, 0, 0.7); /* Dark overlay to contrast the background */
   border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Stronger shadow for a floating effect */
-  max-width: 250px;
+  padding: 3rem;
+  max-width: 400px;
   width: 100%;
-  color: #fff;  /* Optional: Adds a light background for better contrast */
+  text-align: center;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: absolute;
+  right: 0%; /* Shift the box to the left */
+  transform: translateX(-10%); /* Fine-tune the position of the box */
 }
 
-.form-group {
-  margin-bottom: 20px;
+/* Hover Effect for Form */
+.container:hover {
+  transform: scale(1.05) translateX(-10%);
+  box-shadow: 0px 25px 35px rgba(0, 0, 0, 0.6); /* Stronger shadow */
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box; 
-  border: 1px solid #ccc; /* Optional: Add border styling */
-  border-radius: 4px; /* Optional: Add border radius */
-}
-
-.form-group button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50; /* Keep the same button color */
+/* Heading Styling */
+.form-heading {
+  font-size: 28px;
+  font-weight: bold;
   color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px; /* Optional: Add border radius */
+  margin-bottom: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: fadeIn 1s ease-in-out;
 }
 
-.form-group button:hover {
-  background-color: #45a049; /* Darken the button on hover */
+/* Fade In Animation */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
-.btn{
+
+/* Input Fields */
+.input-field {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background: #f7f7f7;
+  font-size: 16px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  border: 2px solid #6a1b9a;
+  box-shadow: 0 0 10px rgba(106, 27, 154, 0.5);
+  outline: none;
+}
+
+.input-field:hover {
+  background: #eaeaea;
+}
+
+/* Label Styling */
+.form-group label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ddd;
+  margin-bottom: 8px;
+  display: block;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.form-group label:hover {
+  color: #6a1b9a;
+  transform: scale(1.05);
+}
+
+/* Submit Button */
+.submit-btn {
+  background-color: #6a1b9a;
+  color: white;
+  padding: 16px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #4a148c;
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.submit-btn:active {
+  background-color: #3e1073;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .form-heading {
+    font-size: 24px;
+  }
 }

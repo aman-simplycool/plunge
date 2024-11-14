@@ -32,6 +32,7 @@ userDetails=new FormGroup({
   img:new FormControl("")
 })
 img_name:string=""; 
+isPasswordVisible: boolean = false;
 file:any={};
 imgUrl:string="";
 flag1:boolean=false;
@@ -47,7 +48,9 @@ async selectImage($event: any) {
   this.img_name=$event.target.files[0].name;
   console.log(this.img_name);
 }
-
+togglePasswordVisibility() {
+  this.isPasswordVisible = !this.isPasswordVisible;
+}
 async uploadImage() {
   
   if (this.flag1 === true) {

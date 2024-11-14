@@ -1,133 +1,175 @@
+/* General Styling */
 .body {
-  background-image: url('../../../assets/img/bg1.jpg'); /* Background Image */
+  background-image: url("../../../assets/img/bg1.jpg"); /* Ensure the wallpaper is visible */
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  margin: 0;
-  padding: 0;
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
+  color: white;
+  font-family: 'Arial', sans-serif;
   display: flex;
-  justify-content: flex-end; /* Aligns the container to the right */
-  align-items: center; /* Centers the container vertically */
-  padding-right: 30px; /* Adds space from the right edge */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .container {
- /* Semi-transparent background */
-  backdrop-filter: blur(10px); /* Blurs the background behind the form */
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Stronger shadow for a floating effect */
-  max-width: 350px;
+  background: rgba(0, 0, 0, 0.6); /* Darker, solid background for better contrast */
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow to make the form stand out */
   width: 100%;
-  color: #fff; /* White text color for dark backgrounds */
+  max-width: 400px;
 }
 
-.formHeading {
-  color: white;
-  font-size: larger;
-  font-family: cursive;
-  opacity: 0; /* Start hidden */
-  animation: fadeIn 3s ease-in forwards; /* Use keyframes for fade-in */
-  text-align: center; /* Center text */
-  margin-bottom: 20px; /* Space below the heading */
+/* Quote Styling */
+.form-heading {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  font-style: italic;
+  color: #fff;
+  padding: 0 10px; /* Padding for readability */
 }
 
-/* Keyframes for fade-in effect */
-@keyframes fadeIn {
-  from {
-    opacity: 0; /* Start with opacity 0 */
-    transform: translateY(-10px); /* Move up slightly */
-  }
-  to {
-    opacity: 1; /* End with opacity 1 */
-    transform: translateY(0); /* Move to original position */
-  }
+.form-heading p {
+  line-height: 1.5;
+  font-size: 18px;
+  color: #f0f0f0;
+  margin: 0;
 }
 
-.form-group {
-  background: rgba(255, 255, 255, 0.1);
+/* Input Field Styling */
+.input-group {
   margin-bottom: 20px;
 }
 
-.form-group label {
+.input-group label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ddd;
   display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #d1d1d1; /* Light gray to soften label text */
+  margin-bottom: 5px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.form-group input {
+.input-group label:hover {
+  color: #6a1b9a; /* Change label color on hover */
+  transform: scale(1.05); /* Slightly scale up the label when hovered */
+}
+
+.input-field {
   width: 100%;
   padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
   box-sizing: border-box;
-  border: 1px solid #555; /* Border to make input stand out */
-  border-radius: 8px; /* Rounded corners */
-  background-color: rgba(255, 255, 255, 0.2); /* Slight transparency */
-  color: #fff;
-  font-size: 14px;
 }
 
-.form-group input::placeholder {
-  color: #d1d1d1; /* Light gray placeholders */
+.input-field:focus {
+  border-color: #6a1b9a;
+  box-shadow: 0 0 5px rgba(106, 27, 154, 0.5);
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #4CAF50; /* Green border on focus */
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); /* Soft green glow */
+/* Profile Image Upload */
+.profile-img {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.form-group button {
+.file-input {
+  margin-top: 10px;
+  padding: 8px;
   width: 100%;
-  padding: 12px;
-  background-color: #4CAF50;
-  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.upload-btn {
+  background-color: #6a1b9a;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 10px;
   border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+  background-color: #4a148c;
+}
+
+/* Submit Button */
+.submit-btn {
+  background-color: #6a1b9a;
+  color: white;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 
-.form-group button:hover {
-  background-color: #45a049; /* Darker green on hover */
+.submit-btn:hover {
+  background-color: #4a148c;
 }
 
-.form-group .login-link {
+/* Login Link */
+.login-link {
   text-align: center;
-  margin-top: 15px;
-  color: #d1d1d1; /* Light gray text */
+  font-size: 14px;
+  margin-top: 20px;
 }
 
-.phtos p {
-  font-size: 18px;
-  font-weight: 300;
-  color: #d1d1d1; /* Soft gray for photo text */
-}
-
-.phtos input {
-  font-size: 15px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: #fff;
-  border: 1px solid #555;
-  background-color: rgba(255, 255, 255, 0.2); /* Match other input styles */
-}
-
-.phtos button {
-  background-color: #4CAF50;
-  color: #fff;
+.login-btn {
+  background-color: #2196f3;
+  color: white;
+  padding: 8px 16px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 10px 15px;
-  border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 
-.phtos button:hover {
-  background-color: #45a049; /* Darker green on hover */
+.login-btn:hover {
+  background-color: #1976d2;
+}
+/* Style for show password checkbox */
+.show-password {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
 
+.show-password input {
+  margin-right: 8px;
+  accent-color: #6a1b9a;
+}
 
+/* Style for input fields */
+.input-field {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background: #f7f7f7;
+  font-size: 16px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  border: 2px solid #6a1b9a;
+  box-shadow: 0 0 10px rgba(106, 27, 154, 0.5);
+  outline: none;
+}
+
+.input-field:hover {
+  background: #eaeaea;
+}

@@ -1,17 +1,17 @@
 <div class="body">
-  <audio autoplay loop src="../../../assets/bgmusic2.mp3"></audio>
+  <audio autoplay src="../../../assets/bgmusic2.mp3"></audio>
   <div class="container">
-    <h2>Login</h2>
+    <h2 class="form-heading">Login</h2>
     <form [formGroup]="userDetails">
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required formControlName="email">
+        <input type="email" id="email" name="email" required formControlName="email" class="input-field">
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required formControlName="password">
+        <input type="password" id="password" name="password" required formControlName="password" class="input-field">
       </div>
-      <button type="submit" (click)="logIn()" class="btn">Login</button>
+      <button type="submit" (click)="logIn()" class="btn submit-btn">Login</button>
     </form>
   </div>
 </div>

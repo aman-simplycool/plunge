@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class HttpService {  
   private userapiUrl="https://plunge-heta.onrender.com/api/user";
   private chatapiUrl="https://plunge-heta.onrender.com/api/chat"
   private messageUrl="https://plunge-heta.onrender.com/api/message"
